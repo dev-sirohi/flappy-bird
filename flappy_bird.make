@@ -28,7 +28,7 @@ ifeq ($(origin AR), default)
   AR = ar
 endif
 RESCOMP = windres
-INCLUDES += -Isrc -Iinclude -Ibuild/external/raylib-master/src
+INCLUDES += -Isrc -Iinclude -Isrc/utils -Ibuild/external/raylib-master/src
 FORCE_INCLUDE +=
 ALL_CPPFLAGS += $(CPPFLAGS) -MD -MP $(DEFINES) $(INCLUDES)
 ALL_RESFLAGS += $(RESFLAGS) $(DEFINES) $(INCLUDES)
@@ -118,12 +118,16 @@ endif
 GENERATED :=
 OBJECTS :=
 
-GENERATED += $(OBJDIR)/flappy_textures.o
-GENERATED += $(OBJDIR)/flappy_utils.o
-GENERATED += $(OBJDIR)/main.o
-OBJECTS += $(OBJDIR)/flappy_textures.o
-OBJECTS += $(OBJDIR)/flappy_utils.o
-OBJECTS += $(OBJDIR)/main.o
+GENERATED += $(OBJDIR)/FlappyUtils.o
+GENERATED += $(OBJDIR)/Tex.o
+GENERATED += $(OBJDIR)/TextureEntity.o
+GENERATED += $(OBJDIR)/VectorUtils.o
+GENERATED += $(OBJDIR)/flappy_main.o
+OBJECTS += $(OBJDIR)/FlappyUtils.o
+OBJECTS += $(OBJDIR)/Tex.o
+OBJECTS += $(OBJDIR)/TextureEntity.o
+OBJECTS += $(OBJDIR)/VectorUtils.o
+OBJECTS += $(OBJDIR)/flappy_main.o
 
 # Rules
 # #############################################
@@ -187,13 +191,19 @@ endif
 # File Rules
 # #############################################
 
-$(OBJDIR)/flappy_textures.o: src/flappy_textures.c
+$(OBJDIR)/flappy_main.o: src/flappy_main.c
 	@echo "$(notdir $<)"
 	$(SILENT) $(CC) $(ALL_CFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/flappy_utils.o: src/flappy_utils.c
+$(OBJDIR)/FlappyUtils.o: src/utils/FlappyUtils.c
 	@echo "$(notdir $<)"
 	$(SILENT) $(CC) $(ALL_CFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/main.o: src/main.c
+$(OBJDIR)/Tex.o: src/utils/Tex.c
+	@echo "$(notdir $<)"
+	$(SILENT) $(CC) $(ALL_CFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/TextureEntity.o: src/utils/TextureEntity.c
+	@echo "$(notdir $<)"
+	$(SILENT) $(CC) $(ALL_CFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/VectorUtils.o: src/utils/VectorUtils.c
 	@echo "$(notdir $<)"
 	$(SILENT) $(CC) $(ALL_CFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 

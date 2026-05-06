@@ -1,21 +1,21 @@
-#include "flappy_utils.h"
+#include "TextureEntity.h"
+#include "FlappyUtils.h"
+#include "raylib.h"
 #include <stdlib.h>
 
-/* Core Util Functions */
-int Fn_GetWindowHeight(void)
+void Fn_Entity_InitDefaults(Entity *entity)
 {
-    return 450;
-}
-int Fn_GetWindowWidth(void)
-{
-    return 800;
-}
-char *Fn_GetTitle(void)
-{
-    return "Flappy";
+    entity->Texture  = Fn_LoadDefaultTexture();
+    entity->Position = (Vector2){0};
+    entity->Velocity = (Vector2){0};
+    entity->Tint     = (Color){0};
 }
 
-/* Entity Movement Functions */
+void Fn_CleanUpTextureEntity(Entity *entity)
+{
+    UnloadTexture(entity->Texture);
+}
+
 void Fn_MoveWabbit(Entity *wabbit)
 {
     if (wabbit == NULL)
@@ -43,10 +43,8 @@ void Fn_MoveWabbit(Entity *wabbit)
 
 void Fn_DrawWabbit(Entity *wabbit)
 {
-    DrawTexture(wabbit->Texture, wabbit->Position.x, wabbit->Position.y, wabbit->Color);
-}
-
-void Fn_DrawTitle(Tex *title)
-{
-    DrawText(title->Text, title->Position.x, title->Position.y, title->FontSize, title->Color);
+    DrawTexture(wabbit->Texture,
+                wabbit->Position.x,
+                wabbit->Position.y,
+                wabbit->Tint);
 }
