@@ -10,8 +10,10 @@ static Tex tx_title;
 
 static void Fn_InitializeEntities(void);
 static void Fn_InitializeTexes(void);
+static void Fn_CleanUp(void);
 
 static void Fn_Update(void);
+static void Fn_Draw(void);
 
 int main()
 {
@@ -27,14 +29,11 @@ int main()
         BeginDrawing();
         ClearBackground(BLACK);
 
-        tx_title.Fn_Draw(&tx_title);
-        t_wabbit.Fn_Move(&t_wabbit);
-        t_wabbit.Fn_Draw(&t_wabbit);
+        Fn_Update();
+        Fn_Draw();
 
         EndDrawing();
     }
-
-    UnloadTexture(t_wabbit.Texture);
 
     CloseWindow();
     return 0;
@@ -60,4 +59,20 @@ static void Fn_InitializeTexes(void)
     tx_title.Color      = WHITE;
     tx_title.FontSize   = 10;
     tx_title.Fn_Draw    = Fn_DrawTitle;
+}
+
+static void Fn_CleanUp(void)
+{
+    UnloadTexture(t_wabbit.Texture);
+}
+
+static void Fn_Update(void)
+{
+    t_wabbit.Fn_Move(&t_wabbit);
+}
+
+static void Fn_Draw(void)
+{
+    tx_title.Fn_Draw(&tx_title);
+    t_wabbit.Fn_Draw(&t_wabbit);
 }
