@@ -13,6 +13,8 @@ struct TextureEntity
 {
     Texture Texture;
     Vector2 Position;
+    float Rotation;
+    float Scale;
     Color Tint;
 
     Vector2 Velocity;

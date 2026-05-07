@@ -8,6 +8,8 @@ void Fn_Entity_InitDefaults(Entity *entity)
     entity->Texture  = Fn_LoadDefaultTexture();
     entity->Position = (Vector2){0};
     entity->Velocity = (Vector2){0};
+    entity->Rotation = 0.0f;
+    entity->Scale    = 1.0f;
     entity->Tint     = (Color){0};
 }
 
@@ -43,8 +45,9 @@ void Fn_MoveWabbit(Entity *wabbit)
 
 void Fn_DrawWabbit(Entity *wabbit)
 {
-    DrawTexture(wabbit->Texture,
-                wabbit->Position.x,
-                wabbit->Position.y,
-                wabbit->Tint);
+    DrawTextureEx(wabbit->Texture,
+                  wabbit->Position,
+                  wabbit->Rotation,
+                  wabbit->Scale,
+                  wabbit->Tint);
 }
