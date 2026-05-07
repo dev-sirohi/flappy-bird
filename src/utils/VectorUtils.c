@@ -108,28 +108,24 @@ int VectorInt_LookAt(VectorInt *vector, size_t index)
     return vector->Array[index];
 }
 
-VectorInt *GetVectorInt(size_t size)
+VectorInt GetVectorInt(size_t size)
 {
-    VectorInt *vector =
-        (VectorInt *)malloc(sizeof(VectorInt));
-    if (vector == NULL)
+    VectorInt vector;
+    vector.Ok    = true;
+    vector.Size  = size;
+    vector.Array = calloc(size, sizeof(int));
+    if (vector.Array == NULL)
     {
-        return vector;
+        vector.Ok   = false;
+        vector.Size = 0;
     }
-    vector->Ok    = true;
-    vector->Array = calloc(size, sizeof(int));
-    if (vector->Array == NULL)
-    {
-        vector->Ok = false;
-    }
-    vector->Size  = size;
-    vector->Count = 0;
+    vector.Count = 0;
 
-    vector->Push_Back = VectorInt_Push_Back;
-    vector->Free      = VectorInt_Free;
-    vector->Clear     = VectorInt_Clear;
-    vector->RemoveAt  = VectorInt_RemoveAt;
-    vector->LookAt    = VectorInt_LookAt;
+    vector.Push_Back = VectorInt_Push_Back;
+    vector.Free      = VectorInt_Free;
+    vector.Clear     = VectorInt_Clear;
+    vector.RemoveAt  = VectorInt_RemoveAt;
+    vector.LookAt    = VectorInt_LookAt;
 
     return vector;
 }
