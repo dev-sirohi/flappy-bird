@@ -1,4 +1,3 @@
-#include "./scenes/TitleScene.c"
 #include "FlappyUtils.h"
 #include "SceneUtils.h"
 #include "Tex.h"
@@ -9,7 +8,7 @@
 #include <stddef.h>
 #include <stdlib.h>
 
-Scene titleScene;
+Scene *titleScene;
 
 int main()
 {

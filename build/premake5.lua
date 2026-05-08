@@ -207,7 +207,9 @@ if (downloadRaylib) then
         includedirs { "../src" }
         includedirs { "../include" }
         -- Custom changes:START
-        includedirs {"../src/utils"}
+        includedirs {"../src/classes/"}
+        includedirs {"../src/entities/"}
+        includedirs {"../src/scenes/"}
         -- Custom changes:END
 
         links {"raylib"}
