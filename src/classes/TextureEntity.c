@@ -5,23 +5,35 @@
 #include <stdlib.h>
 
 /* Texture Entity */
+static void Fn_TextureEntity_Update(TextureEntity *entity);
+static void Fn_TextureEntity_Draw(TextureEntity *entity);
+static void Fn_TextureEntity_CleanUp(TextureEntity *entity);
 
-static void Fn_TextureEntity_CleanUp(TextureEntity *entity)
-{
-    UnloadTexture(entity->Texture);
-}
-
-TextureEntity CreateTextureEntity(void)
+TextureEntity CreateTextureEntity(Texture texture)
 {
     TextureEntity entity;
-    entity.Texture  = Fn_LoadDefaultTexture();
+    entity.Texture  = Fn_GetDefaultTexture();
     entity.Position = (Vector2){0};
     entity.Velocity = (Vector2){0};
     entity.Rotation = 0.0f;
     entity.Scale    = 1.0f;
     entity.Tint     = (Color){0};
     entity.CleanUp  = Fn_TextureEntity_CleanUp;
+    entity.Update   = Fn_TextureEntity_Update;
+    entity.Draw     = Fn_TextureEntity_Draw;
     return entity;
+}
+
+static void Fn_TextureEntity_Update(TextureEntity *entity)
+{
+}
+static void Fn_TextureEntity_Draw(TextureEntity *entity)
+{
+}
+
+static void Fn_TextureEntity_CleanUp(TextureEntity *entity)
+{
+    UnloadTexture(entity->Texture);
 }
 
 /* VectorTextureEntity */
@@ -37,8 +49,9 @@ static void Fn_VectorTextureEntity_Push_Back(VectorTextureEntity *vector,
     }
     if (vector->Count == vector->Size)
     {
-        int *temp = realloc(vector->Array,
-                            (vector->Size * 2) * sizeof(TextureEntity *));
+        TextureEntity *temp = (TextureEntity *)realloc(
+            vector->Array,
+            (vector->Size * 2) * sizeof(TextureEntity *));
         if (temp == NULL)
         {
             fprintf(stderr,
@@ -51,7 +64,7 @@ static void Fn_VectorTextureEntity_Push_Back(VectorTextureEntity *vector,
             return;
         }
 
-        vector->Array = temp;
+        vector->Array = &temp;
         vector->Size *= 2;
     }
     vector->Array[vector->Count++] = value;
@@ -71,7 +84,8 @@ static void Fn_VectorTextureEntity_Clear(VectorTextureEntity *vector)
     }
     free(vector->Array);
     vector->Array = NULL;
-    int *temp     = realloc(vector->Array, INITIAL_VECTOR_CAPACITY);
+    TextureEntity *temp =
+        (TextureEntity *)realloc(vector->Array, INITIAL_VECTOR_CAPACITY);
     if (temp == NULL)
     {
         fprintf(stderr,
@@ -82,7 +96,7 @@ static void Fn_VectorTextureEntity_Clear(VectorTextureEntity *vector)
 
         return;
     }
-    vector->Array = temp;
+    vector->Array = &temp;
     vector->Size  = 0;
     vector->Count = 0;
     vector->Ok    = true;
@@ -97,9 +111,10 @@ static void Fn_VectorTextureEntity_RemoveAt(VectorTextureEntity *vector,
     }
 }
 
-static int Fn_VectorTextureEntity_LookAt(VectorTextureEntity *vector,
-                                         size_t index)
+static TextureEntity
+Fn_VectorTextureEntity_LookAt(VectorTextureEntity *vector, size_t index)
 {
+    TextureEntity textureEntity;
     if (index >= vector->Count)
     {
         fprintf(stderr,
@@ -108,9 +123,10 @@ static int Fn_VectorTextureEntity_LookAt(VectorTextureEntity *vector,
                 __FILE__,
                 __LINE__);
 
-        return 0;
+        exit(EXIT_FAILURE);
     }
-    return vector->Array[index];
+    textureEntity = *vector->Array[index];
+    return textureEntity;
 }
 
 VectorTextureEntity CreateVectorTextureEntity(void)

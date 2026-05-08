@@ -1,34 +1,38 @@
 #include "FlappyUtils.h"
-#include "SceneUtils.h"
+#include "Scene.h"
 #include "Tex.h"
 #include "TextureEntity.h"
+#include "TitleScene.h"
 #include "raylib.h"
 #include "resource_dir.h"
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdlib.h>
 
-Scene *titleScene;
+Scene titleScene;
 
 int main()
 {
     SetConfigFlags(FLAG_VSYNC_HINT | FLAG_WINDOW_HIGHDPI);
     InitWindow(Fn_GetWindowWidth(), Fn_GetWindowHeight(), Fn_GetTitle());
-    ToggleFullscreen();
+    // ToggleFullscreen();
     SearchAndSetResourceDir("resources");
 
-    titleScene = Fn_GetTitleScene();
+    titleScene = CreateTitleScene();
+    titleScene.Init(&titleScene);
 
     while (!WindowShouldClose())
     {
         BeginDrawing();
         ClearBackground(BLACK);
 
-        Fn_Update();
-        Fn_Draw();
+        titleScene.Update(&titleScene);
+        titleScene.Draw(&titleScene);
 
         EndDrawing();
     }
+
+    titleScene.CleanUp(&titleScene);
 
     CloseWindow();
     return 0;

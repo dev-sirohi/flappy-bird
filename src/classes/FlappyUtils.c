@@ -14,7 +14,7 @@ char *Fn_GetTitle(void)
 {
     return "Flappy Wabbit";
 }
-Texture Fn_LoadDefaultTexture()
+Texture Fn_GetDefaultTexture()
 {
     return (Texture){0}; // TODO
 }

@@ -2,10 +2,10 @@
 #define TEXTURE_ENTITY
 
 #include "raylib.h"
+#include <stddef.h>
 
 typedef struct TextureEntity TextureEntity;
-typedef void (*Method_TextureEntity_Init)(TextureEntity *);
-typedef void (*Method_TextureEntity_Move)(TextureEntity *);
+typedef void (*Method_TextureEntity_Update)(TextureEntity *);
 typedef void (*Method_TextureEntity_Draw)(TextureEntity *);
 typedef void (*Method_TextureEntity_CleanUp)(TextureEntity *);
 
@@ -19,12 +19,12 @@ struct TextureEntity
 
     Vector2 Velocity;
 
-    Method_TextureEntity_Init Init;
-    Method_TextureEntity_Move Move;
+    Method_TextureEntity_Update Update;
     Method_TextureEntity_Draw Draw;
     Method_TextureEntity_CleanUp CleanUp;
 };
-TextureEntity CreateEntity(void);
+// Constructor
+TextureEntity CreateTextureEntity(Texture texture);
 
 typedef struct VectorTextureEntity VectorTextureEntity;
 typedef void (*Method_VectorTextureEntity_Push_Back)(VectorTextureEntity *,
@@ -33,8 +33,8 @@ typedef void (*Method_VectorTextureEntity_Free)(VectorTextureEntity *);
 typedef void (*Method_VectorTextureEntity_Clear)(VectorTextureEntity *);
 typedef void (*Method_VectorTextureEntity_RemoveAt)(VectorTextureEntity *,
                                                     size_t index);
-typedef void (*Method_VectorTextureEntity_LookAt)(VectorTextureEntity *,
-                                                  size_t index);
+typedef TextureEntity (*Method_VectorTextureEntity_LookAt)(
+    VectorTextureEntity *, size_t index);
 
 struct VectorTextureEntity
 {
@@ -49,6 +49,7 @@ struct VectorTextureEntity
     Method_VectorTextureEntity_RemoveAt RemoveAt;
     Method_VectorTextureEntity_LookAt LookAt;
 };
+// Constructor
 VectorTextureEntity CreateVectorTextureEntity(void);
 
 #endif

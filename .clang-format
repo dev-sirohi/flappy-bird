@@ -4,7 +4,7 @@ ColumnLimit: 75
 BreakBeforeBraces: Allman
 BinPackArguments: false
 BinPackParameters: false
-AlignAfterOpenBracket: true
+AlignAfterOpenBracket: Align
 AlignArrayOfStructures: Right
 AlignConsecutiveAssignments: Consecutive
 AlignOperands: AlignAfterOperator
@@ -17,3 +17,5 @@ BreakConstructorInitializers: BeforeColon
 BreakInheritanceList: BeforeColon
 PointerAlignment: Right
 UseTab: Never
+PenaltyBreakBeforeFirstCallParameter: 0
+AllowAllArgumentsOnNextLine: false

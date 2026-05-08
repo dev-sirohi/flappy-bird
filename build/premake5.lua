@@ -116,7 +116,7 @@ function platform_defines()
 end
 
 -- if you don't want to download raylib, then set this to false, and set the raylib dir to where you want raylib to be pulled from, must be full sources.
-downloadRaylib = true
+downloadRaylib = false
 raylib_dir = "external/raylib-master"
 
 workspaceName = 'MyGame'
@@ -210,6 +210,7 @@ if (downloadRaylib) then
         includedirs {"../src/classes/"}
         includedirs {"../src/entities/"}
         includedirs {"../src/scenes/"}
+        includedirs {"../src/buttons/"}
         -- Custom changes:END
 
         links {"raylib"}

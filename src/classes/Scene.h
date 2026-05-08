@@ -11,7 +11,6 @@ typedef void (*Method_Scene_CleanUp)(Scene *);
 
 struct Scene
 {
-    VectorTextureEntity EntityList;
     void *_sceneData; // Always a private struct containing private
                       // members and methods
 
@@ -20,12 +19,7 @@ struct Scene
     Method_Scene_Draw Draw;
     Method_Scene_CleanUp CleanUp;
 };
-
-Scene CreateScene()
-{
-    Scene scene;
-    scene.EntityList = CreateVectorTextureEntity();
-    return scene;
-}
+// Constructor
+Scene CreateScene();
 
 #endif

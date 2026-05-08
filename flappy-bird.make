@@ -28,7 +28,7 @@ ifeq ($(origin AR), default)
   AR = ar
 endif
 RESCOMP = windres
-INCLUDES += -Isrc -Iinclude -Ibuild/external/raylib-master/src
+INCLUDES += -Isrc -Iinclude -Isrc/classes -Isrc/entities -Isrc/scenes -Isrc/buttons -Ibuild/external/raylib-master/src
 FORCE_INCLUDE +=
 ALL_CPPFLAGS += $(CPPFLAGS) -MD -MP $(DEFINES) $(INCLUDES)
 ALL_RESFLAGS += $(RESFLAGS) $(DEFINES) $(INCLUDES)
@@ -118,10 +118,26 @@ endif
 GENERATED :=
 OBJECTS :=
 
+GENERATED += $(OBJDIR)/FlappyUtils.o
+GENERATED += $(OBJDIR)/Scene.o
+GENERATED += $(OBJDIR)/SimpleButton.o
+GENERATED += $(OBJDIR)/Tex.o
+GENERATED += $(OBJDIR)/TextureButton.o
+GENERATED += $(OBJDIR)/TextureEntity.o
+GENERATED += $(OBJDIR)/TitleScene.o
+GENERATED += $(OBJDIR)/VectorUtils.o
+GENERATED += $(OBJDIR)/Wabbit.o
 GENERATED += $(OBJDIR)/flappy_main.o
-GENERATED += $(OBJDIR)/flappy_utils.o
+OBJECTS += $(OBJDIR)/FlappyUtils.o
+OBJECTS += $(OBJDIR)/Scene.o
+OBJECTS += $(OBJDIR)/SimpleButton.o
+OBJECTS += $(OBJDIR)/Tex.o
+OBJECTS += $(OBJDIR)/TextureButton.o
+OBJECTS += $(OBJDIR)/TextureEntity.o
+OBJECTS += $(OBJDIR)/TitleScene.o
+OBJECTS += $(OBJDIR)/VectorUtils.o
+OBJECTS += $(OBJDIR)/Wabbit.o
 OBJECTS += $(OBJDIR)/flappy_main.o
-OBJECTS += $(OBJDIR)/flappy_utils.o
 
 # Rules
 # #############################################
@@ -185,10 +201,34 @@ endif
 # File Rules
 # #############################################
 
+$(OBJDIR)/FlappyUtils.o: src/classes/FlappyUtils.c
+	@echo "$(notdir $<)"
+	$(SILENT) $(CC) $(ALL_CFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/Scene.o: src/classes/Scene.c
+	@echo "$(notdir $<)"
+	$(SILENT) $(CC) $(ALL_CFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/SimpleButton.o: src/classes/SimpleButton.c
+	@echo "$(notdir $<)"
+	$(SILENT) $(CC) $(ALL_CFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/Tex.o: src/classes/Tex.c
+	@echo "$(notdir $<)"
+	$(SILENT) $(CC) $(ALL_CFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/TextureButton.o: src/classes/TextureButton.c
+	@echo "$(notdir $<)"
+	$(SILENT) $(CC) $(ALL_CFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/TextureEntity.o: src/classes/TextureEntity.c
+	@echo "$(notdir $<)"
+	$(SILENT) $(CC) $(ALL_CFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/VectorUtils.o: src/classes/VectorUtils.c
+	@echo "$(notdir $<)"
+	$(SILENT) $(CC) $(ALL_CFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/Wabbit.o: src/entities/Wabbit.c
+	@echo "$(notdir $<)"
+	$(SILENT) $(CC) $(ALL_CFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/flappy_main.o: src/flappy_main.c
 	@echo "$(notdir $<)"
 	$(SILENT) $(CC) $(ALL_CFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/flappy_utils.o: src/flappy_utils.c
+$(OBJDIR)/TitleScene.o: src/scenes/TitleScene.c
 	@echo "$(notdir $<)"
 	$(SILENT) $(CC) $(ALL_CFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 

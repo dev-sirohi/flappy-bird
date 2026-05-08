@@ -8,6 +8,6 @@
 int Fn_GetWindowHeight(void);
 int Fn_GetWindowWidth(void);
 char *Fn_GetTitle(void);
-Texture Fn_LoadDefaultTexture();
+Texture Fn_GetDefaultTexture();
 
 #endif
